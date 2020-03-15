@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:demoji/demoji.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ncovidtracker/business/blocs/home.dart';
@@ -27,7 +31,12 @@ class HomeScreen extends StatelessWidget {
             initialIndex: 0,
             child: Scaffold(
               appBar: AppBar(
-                title: Text('nCovid19 Tracker'),
+                title: kIsWeb ||
+                        Platform.isWindows ||
+                        Platform.isLinux ||
+                        Platform.isMacOS
+                    ? Text('nCovid19 Tracker')
+                    : Text(Demoji.microbe),
                 actions: <Widget>[
                   Container(
                     margin: EdgeInsets.only(right: 4),
