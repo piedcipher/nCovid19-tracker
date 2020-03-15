@@ -26,11 +26,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         final response = await _nCovidRepository.getCountryStats(
           countryCode: _countryCode,
         );
-        yield DataState(
-          nCovidData: NCovidData.fromJson(response.body),
-          newsItems: jsonDecode(response.body)['countrynewsitems'],
-          countryCode: _countryCode,
-        );
+        if (response.statusCode == 200) {
+          yield DataState(
+            nCovidData: NCovidData.fromJson(response.body),
+            newsItems: jsonDecode(response.body)['countrynewsitems'],
+            countryCode: _countryCode,
+          );
+        } else {
+          yield ErrorState(
+            errorMessage: response.body.toString(),
+          );
+        }
       } catch (e) {
         yield ErrorState(
           errorMessage: e.toString(),
