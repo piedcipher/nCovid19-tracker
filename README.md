@@ -1,8 +1,8 @@
-# nCovid19-tracker
+<h1 align="center">nCovid19-tracker</h1>
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/piedcipher/nCovid19-tracker/master/readme-medias/icon.png"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/piedcipher/nCovid19-tracker/master/readme-medias/icon.png"></p>
 
-<p style="text-align: center;"><a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019">nCovid19</a> Tracker built using <a href="https://flutter.dev">Flutter</a> & <a href="https://thevirustracker.com/api">Coronavirus Tracker</a> API.</p>
+<p align="center"><a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019">nCovid19</a> Tracker built using <a href="https://flutter.dev">Flutter</a> & <a href="https://thevirustracker.com/api">Coronavirus Tracker</a> API.</p>
 
 ## Screeshots
 <table>
