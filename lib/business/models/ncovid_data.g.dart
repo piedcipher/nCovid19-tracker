@@ -6,20 +6,177 @@ part of 'ncovid_data.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<NCovidData> _$nCovidDataSerializer = new _$NCovidDataSerializer();
+Serializer<Global> _$globalSerializer = new _$GlobalSerializer();
+Serializer<GlobalData> _$globalDataSerializer = new _$GlobalDataSerializer();
+Serializer<Country> _$countrySerializer = new _$CountrySerializer();
 Serializer<CountryData> _$countryDataSerializer = new _$CountryDataSerializer();
 Serializer<Info> _$infoSerializer = new _$InfoSerializer();
 Serializer<CountryNewsItem> _$countryNewsItemSerializer =
     new _$CountryNewsItemSerializer();
 
-class _$NCovidDataSerializer implements StructuredSerializer<NCovidData> {
+class _$GlobalSerializer implements StructuredSerializer<Global> {
   @override
-  final Iterable<Type> types = const [NCovidData, _$NCovidData];
+  final Iterable<Type> types = const [Global, _$Global];
   @override
-  final String wireName = 'NCovidData';
+  final String wireName = 'Global';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, NCovidData object,
+  Iterable<Object> serialize(Serializers serializers, Global object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[];
+    if (object.globalData != null) {
+      result
+        ..add('results')
+        ..add(serializers.serialize(object.globalData,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(GlobalData)])));
+    }
+    return result;
+  }
+
+  @override
+  Global deserialize(Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GlobalBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'results':
+          result.globalData.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(GlobalData)]))
+              as BuiltList<Object>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GlobalDataSerializer implements StructuredSerializer<GlobalData> {
+  @override
+  final Iterable<Type> types = const [GlobalData, _$GlobalData];
+  @override
+  final String wireName = 'GlobalData';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, GlobalData object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[];
+    if (object.totalCases != null) {
+      result
+        ..add('total_cases')
+        ..add(serializers.serialize(object.totalCases,
+            specifiedType: const FullType(int)));
+    }
+    if (object.totalRecovered != null) {
+      result
+        ..add('total_recovered')
+        ..add(serializers.serialize(object.totalRecovered,
+            specifiedType: const FullType(int)));
+    }
+    if (object.totalUnresolved != null) {
+      result
+        ..add('total_unresolved')
+        ..add(serializers.serialize(object.totalUnresolved,
+            specifiedType: const FullType(int)));
+    }
+    if (object.totalDeaths != null) {
+      result
+        ..add('total_deaths')
+        ..add(serializers.serialize(object.totalDeaths,
+            specifiedType: const FullType(int)));
+    }
+    if (object.totalNewCasesToday != null) {
+      result
+        ..add('total_new_cases_today')
+        ..add(serializers.serialize(object.totalNewCasesToday,
+            specifiedType: const FullType(int)));
+    }
+    if (object.totalNewDeathsToday != null) {
+      result
+        ..add('total_new_deaths_today')
+        ..add(serializers.serialize(object.totalNewDeathsToday,
+            specifiedType: const FullType(int)));
+    }
+    if (object.totalActiveCases != null) {
+      result
+        ..add('total_active_cases')
+        ..add(serializers.serialize(object.totalActiveCases,
+            specifiedType: const FullType(int)));
+    }
+    if (object.totalSeriousCases != null) {
+      result
+        ..add('total_serious_cases')
+        ..add(serializers.serialize(object.totalSeriousCases,
+            specifiedType: const FullType(int)));
+    }
+    return result;
+  }
+
+  @override
+  GlobalData deserialize(Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GlobalDataBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'total_cases':
+          result.totalCases = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'total_recovered':
+          result.totalRecovered = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'total_unresolved':
+          result.totalUnresolved = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'total_deaths':
+          result.totalDeaths = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'total_new_cases_today':
+          result.totalNewCasesToday = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'total_new_deaths_today':
+          result.totalNewDeathsToday = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'total_active_cases':
+          result.totalActiveCases = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'total_serious_cases':
+          result.totalSeriousCases = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$CountrySerializer implements StructuredSerializer<Country> {
+  @override
+  final Iterable<Type> types = const [Country, _$Country];
+  @override
+  final String wireName = 'Country';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, Country object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[];
     if (object.countryData != null) {
@@ -33,9 +190,9 @@ class _$NCovidDataSerializer implements StructuredSerializer<NCovidData> {
   }
 
   @override
-  NCovidData deserialize(Serializers serializers, Iterable<Object> serialized,
+  Country deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new NCovidDataBuilder();
+    final result = new CountryBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -331,26 +488,288 @@ class _$CountryNewsItemSerializer
   }
 }
 
-class _$NCovidData extends NCovidData {
+class _$Global extends Global {
   @override
-  final BuiltList<CountryData> countryData;
+  final BuiltList<GlobalData> globalData;
 
-  factory _$NCovidData([void Function(NCovidDataBuilder) updates]) =>
-      (new NCovidDataBuilder()..update(updates)).build();
+  factory _$Global([void Function(GlobalBuilder) updates]) =>
+      (new GlobalBuilder()..update(updates)).build();
 
-  _$NCovidData._({this.countryData}) : super._();
+  _$Global._({this.globalData}) : super._();
 
   @override
-  NCovidData rebuild(void Function(NCovidDataBuilder) updates) =>
+  Global rebuild(void Function(GlobalBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  NCovidDataBuilder toBuilder() => new NCovidDataBuilder()..replace(this);
+  GlobalBuilder toBuilder() => new GlobalBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is NCovidData && countryData == other.countryData;
+    return other is Global && globalData == other.globalData;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(0, globalData.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('Global')
+          ..add('globalData', globalData))
+        .toString();
+  }
+}
+
+class GlobalBuilder implements Builder<Global, GlobalBuilder> {
+  _$Global _$v;
+
+  ListBuilder<GlobalData> _globalData;
+  ListBuilder<GlobalData> get globalData =>
+      _$this._globalData ??= new ListBuilder<GlobalData>();
+  set globalData(ListBuilder<GlobalData> globalData) =>
+      _$this._globalData = globalData;
+
+  GlobalBuilder();
+
+  GlobalBuilder get _$this {
+    if (_$v != null) {
+      _globalData = _$v.globalData?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(Global other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$Global;
+  }
+
+  @override
+  void update(void Function(GlobalBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$Global build() {
+    _$Global _$result;
+    try {
+      _$result = _$v ?? new _$Global._(globalData: _globalData?.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'globalData';
+        _globalData?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Global', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GlobalData extends GlobalData {
+  @override
+  final int totalCases;
+  @override
+  final int totalRecovered;
+  @override
+  final int totalUnresolved;
+  @override
+  final int totalDeaths;
+  @override
+  final int totalNewCasesToday;
+  @override
+  final int totalNewDeathsToday;
+  @override
+  final int totalActiveCases;
+  @override
+  final int totalSeriousCases;
+
+  factory _$GlobalData([void Function(GlobalDataBuilder) updates]) =>
+      (new GlobalDataBuilder()..update(updates)).build();
+
+  _$GlobalData._(
+      {this.totalCases,
+      this.totalRecovered,
+      this.totalUnresolved,
+      this.totalDeaths,
+      this.totalNewCasesToday,
+      this.totalNewDeathsToday,
+      this.totalActiveCases,
+      this.totalSeriousCases})
+      : super._();
+
+  @override
+  GlobalData rebuild(void Function(GlobalDataBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GlobalDataBuilder toBuilder() => new GlobalDataBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GlobalData &&
+        totalCases == other.totalCases &&
+        totalRecovered == other.totalRecovered &&
+        totalUnresolved == other.totalUnresolved &&
+        totalDeaths == other.totalDeaths &&
+        totalNewCasesToday == other.totalNewCasesToday &&
+        totalNewDeathsToday == other.totalNewDeathsToday &&
+        totalActiveCases == other.totalActiveCases &&
+        totalSeriousCases == other.totalSeriousCases;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc(
+            $jc(
+                $jc(
+                    $jc(
+                        $jc(
+                            $jc($jc(0, totalCases.hashCode),
+                                totalRecovered.hashCode),
+                            totalUnresolved.hashCode),
+                        totalDeaths.hashCode),
+                    totalNewCasesToday.hashCode),
+                totalNewDeathsToday.hashCode),
+            totalActiveCases.hashCode),
+        totalSeriousCases.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('GlobalData')
+          ..add('totalCases', totalCases)
+          ..add('totalRecovered', totalRecovered)
+          ..add('totalUnresolved', totalUnresolved)
+          ..add('totalDeaths', totalDeaths)
+          ..add('totalNewCasesToday', totalNewCasesToday)
+          ..add('totalNewDeathsToday', totalNewDeathsToday)
+          ..add('totalActiveCases', totalActiveCases)
+          ..add('totalSeriousCases', totalSeriousCases))
+        .toString();
+  }
+}
+
+class GlobalDataBuilder implements Builder<GlobalData, GlobalDataBuilder> {
+  _$GlobalData _$v;
+
+  int _totalCases;
+  int get totalCases => _$this._totalCases;
+  set totalCases(int totalCases) => _$this._totalCases = totalCases;
+
+  int _totalRecovered;
+  int get totalRecovered => _$this._totalRecovered;
+  set totalRecovered(int totalRecovered) =>
+      _$this._totalRecovered = totalRecovered;
+
+  int _totalUnresolved;
+  int get totalUnresolved => _$this._totalUnresolved;
+  set totalUnresolved(int totalUnresolved) =>
+      _$this._totalUnresolved = totalUnresolved;
+
+  int _totalDeaths;
+  int get totalDeaths => _$this._totalDeaths;
+  set totalDeaths(int totalDeaths) => _$this._totalDeaths = totalDeaths;
+
+  int _totalNewCasesToday;
+  int get totalNewCasesToday => _$this._totalNewCasesToday;
+  set totalNewCasesToday(int totalNewCasesToday) =>
+      _$this._totalNewCasesToday = totalNewCasesToday;
+
+  int _totalNewDeathsToday;
+  int get totalNewDeathsToday => _$this._totalNewDeathsToday;
+  set totalNewDeathsToday(int totalNewDeathsToday) =>
+      _$this._totalNewDeathsToday = totalNewDeathsToday;
+
+  int _totalActiveCases;
+  int get totalActiveCases => _$this._totalActiveCases;
+  set totalActiveCases(int totalActiveCases) =>
+      _$this._totalActiveCases = totalActiveCases;
+
+  int _totalSeriousCases;
+  int get totalSeriousCases => _$this._totalSeriousCases;
+  set totalSeriousCases(int totalSeriousCases) =>
+      _$this._totalSeriousCases = totalSeriousCases;
+
+  GlobalDataBuilder();
+
+  GlobalDataBuilder get _$this {
+    if (_$v != null) {
+      _totalCases = _$v.totalCases;
+      _totalRecovered = _$v.totalRecovered;
+      _totalUnresolved = _$v.totalUnresolved;
+      _totalDeaths = _$v.totalDeaths;
+      _totalNewCasesToday = _$v.totalNewCasesToday;
+      _totalNewDeathsToday = _$v.totalNewDeathsToday;
+      _totalActiveCases = _$v.totalActiveCases;
+      _totalSeriousCases = _$v.totalSeriousCases;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GlobalData other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$GlobalData;
+  }
+
+  @override
+  void update(void Function(GlobalDataBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$GlobalData build() {
+    final _$result = _$v ??
+        new _$GlobalData._(
+            totalCases: totalCases,
+            totalRecovered: totalRecovered,
+            totalUnresolved: totalUnresolved,
+            totalDeaths: totalDeaths,
+            totalNewCasesToday: totalNewCasesToday,
+            totalNewDeathsToday: totalNewDeathsToday,
+            totalActiveCases: totalActiveCases,
+            totalSeriousCases: totalSeriousCases);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$Country extends Country {
+  @override
+  final BuiltList<CountryData> countryData;
+
+  factory _$Country([void Function(CountryBuilder) updates]) =>
+      (new CountryBuilder()..update(updates)).build();
+
+  _$Country._({this.countryData}) : super._();
+
+  @override
+  Country rebuild(void Function(CountryBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  CountryBuilder toBuilder() => new CountryBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is Country && countryData == other.countryData;
   }
 
   @override
@@ -360,14 +779,14 @@ class _$NCovidData extends NCovidData {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('NCovidData')
+    return (newBuiltValueToStringHelper('Country')
           ..add('countryData', countryData))
         .toString();
   }
 }
 
-class NCovidDataBuilder implements Builder<NCovidData, NCovidDataBuilder> {
-  _$NCovidData _$v;
+class CountryBuilder implements Builder<Country, CountryBuilder> {
+  _$Country _$v;
 
   ListBuilder<CountryData> _countryData;
   ListBuilder<CountryData> get countryData =>
@@ -375,9 +794,9 @@ class NCovidDataBuilder implements Builder<NCovidData, NCovidDataBuilder> {
   set countryData(ListBuilder<CountryData> countryData) =>
       _$this._countryData = countryData;
 
-  NCovidDataBuilder();
+  CountryBuilder();
 
-  NCovidDataBuilder get _$this {
+  CountryBuilder get _$this {
     if (_$v != null) {
       _countryData = _$v.countryData?.toBuilder();
       _$v = null;
@@ -386,23 +805,23 @@ class NCovidDataBuilder implements Builder<NCovidData, NCovidDataBuilder> {
   }
 
   @override
-  void replace(NCovidData other) {
+  void replace(Country other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$NCovidData;
+    _$v = other as _$Country;
   }
 
   @override
-  void update(void Function(NCovidDataBuilder) updates) {
+  void update(void Function(CountryBuilder) updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$NCovidData build() {
-    _$NCovidData _$result;
+  _$Country build() {
+    _$Country _$result;
     try {
-      _$result = _$v ?? new _$NCovidData._(countryData: _countryData?.build());
+      _$result = _$v ?? new _$Country._(countryData: _countryData?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -410,7 +829,7 @@ class NCovidDataBuilder implements Builder<NCovidData, NCovidDataBuilder> {
         _countryData?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'NCovidData', _$failedField, e.toString());
+            'Country', _$failedField, e.toString());
       }
       rethrow;
     }

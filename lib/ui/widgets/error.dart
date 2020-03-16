@@ -17,6 +17,7 @@ class ErrorsWidget extends StatelessWidget {
           children: <Widget>[
             Text(
               errorMessage,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 18,
               ),

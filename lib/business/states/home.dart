@@ -19,13 +19,15 @@ class LoadingState extends HomeState {
 }
 
 class DataState extends HomeState {
-  final NCovidData nCovidData;
-  final List<dynamic> newsItems;
+  final Global globalData;
+  final Country countryData;
+  final List<dynamic> countryNewsItems;
   final CountryCode countryCode;
 
   const DataState({
-    @required this.nCovidData,
-    @required this.newsItems,
+    @required this.globalData,
+    @required this.countryData,
+    @required this.countryNewsItems,
     @required this.countryCode,
   });
 }

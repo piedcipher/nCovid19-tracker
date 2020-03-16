@@ -5,10 +5,10 @@ abstract class HomeEvent {
   const HomeEvent();
 }
 
-class GetCountryDataEvent extends HomeEvent {
+class GetDataEvent extends HomeEvent {
   final CountryCode countryCode;
 
-  const GetCountryDataEvent({
+  const GetDataEvent({
     @required this.countryCode,
   });
 }

@@ -9,6 +9,7 @@ import 'package:ncovidtracker/business/events/home.dart';
 import 'package:ncovidtracker/business/states/home.dart';
 import 'package:ncovidtracker/ui/screens/home/widgets/country_data_tab.dart';
 import 'package:ncovidtracker/ui/screens/home/widgets/country_news_tab.dart';
+import 'package:ncovidtracker/ui/screens/home/widgets/global_data_tab.dart';
 import 'package:ncovidtracker/ui/widgets/error.dart';
 import 'package:ncovidtracker/ui/widgets/loading.dart';
 import 'package:ncovidtracker/utils/constants.dart';
@@ -27,7 +28,7 @@ class HomeScreen extends StatelessWidget {
           );
         } else if (homeState is DataState) {
           return DefaultTabController(
-            length: 2,
+            length: 3,
             initialIndex: 0,
             child: Scaffold(
               appBar: AppBar(
@@ -44,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                       underline: Container(),
                       onChanged: (_newCountryCode) {
                         BlocProvider.of<HomeBloc>(context).add(
-                          GetCountryDataEvent(countryCode: _newCountryCode),
+                          GetDataEvent(countryCode: _newCountryCode),
                         );
                       },
                       value: homeState.countryCode,
@@ -63,10 +64,13 @@ class HomeScreen extends StatelessWidget {
                   controller: DefaultTabController.of(context),
                   tabs: <Widget>[
                     Tab(
-                      child: Text('Data'),
+                      child: Text('Global Data'),
                     ),
                     Tab(
-                      child: Text('News'),
+                      child: Text('Local Data'),
+                    ),
+                    Tab(
+                      child: Text('Local News'),
                     )
                   ],
                 ),
@@ -77,7 +81,19 @@ class HomeScreen extends StatelessWidget {
                   RefreshIndicator(
                     onRefresh: () async {
                       BlocProvider.of<HomeBloc>(context).add(
-                        GetCountryDataEvent(countryCode: homeState.countryCode),
+                        GetDataEvent(
+                          countryCode: homeState.countryCode,
+                        ),
+                      );
+                    },
+                    child: GlobalDataTab(
+                      homeState: homeState,
+                    ),
+                  ),
+                  RefreshIndicator(
+                    onRefresh: () async {
+                      BlocProvider.of<HomeBloc>(context).add(
+                        GetDataEvent(countryCode: homeState.countryCode),
                       );
                     },
                     child: CountryDataTab(
@@ -87,7 +103,7 @@ class HomeScreen extends StatelessWidget {
                   RefreshIndicator(
                     onRefresh: () async {
                       BlocProvider.of<HomeBloc>(context).add(
-                        GetCountryDataEvent(countryCode: homeState.countryCode),
+                        GetDataEvent(countryCode: homeState.countryCode),
                       );
                     },
                     child: CountryNewsTab(

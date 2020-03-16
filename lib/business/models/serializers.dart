@@ -6,7 +6,9 @@ import 'package:ncovidtracker/business/models/ncovid_data.dart';
 part 'serializers.g.dart';
 
 @SerializersFor(const [
-  NCovidData,
+  Global,
+  GlobalData,
+  Country,
   CountryData,
   CountryNewsItem,
   Info,

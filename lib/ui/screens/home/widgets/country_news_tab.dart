@@ -21,8 +21,8 @@ class CountryNewsTab extends StatelessWidget {
       itemBuilder: (context, index) {
         final newsItem = serializers.deserializeWith(
             CountryNewsItem.serializer,
-            homeState.newsItems.first[
-                (homeState.newsItems.first.keys.length - 1 - index)
+            homeState.countryNewsItems.first[
+                (homeState.countryNewsItems.first.keys.length - 1 - index)
                     .toString()]);
 
         return ListTile(
@@ -60,7 +60,7 @@ class CountryNewsTab extends StatelessWidget {
           ),
         );
       },
-      itemCount: homeState.newsItems.first.keys.length,
+      itemCount: homeState.countryNewsItems.first.keys.length,
     );
   }
 }

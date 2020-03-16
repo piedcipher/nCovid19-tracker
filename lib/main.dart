@@ -14,7 +14,7 @@ void main() async {
         BlocProvider<HomeBloc>(
           create: (context) => HomeBloc()
             ..add(
-              GetCountryDataEvent(
+              GetDataEvent(
                 countryCode: CountryCode.IN,
               ),
             ),

@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ncovidtracker/business/events/home.dart';
 import 'package:ncovidtracker/business/models/ncovid_data.dart';
-import 'package:ncovidtracker/business/repositories/ncovid_repository.dart';
+import 'package:ncovidtracker/business/repositories/the_virus_tracker_api_repository.dart';
 import 'package:ncovidtracker/business/states/home.dart';
 import 'package:ncovidtracker/utils/constants.dart';
 import 'package:ncovidtracker/utils/enums.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final NCovidRepository _nCovidRepository = NCovidRepository();
+  final TheVirusTrackerApiRepository _theVirusTrackerApiRepository =
+      TheVirusTrackerApiRepository();
   CountryCode _countryCode = CountryCode.IN;
 
   @override
@@ -17,24 +18,32 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   @override
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
-    if (event is GetCountryDataEvent) {
+    if (event is GetDataEvent) {
       _countryCode = event.countryCode;
       yield LoadingState(
         loadingMessage: 'Loading ${countryCodeMap[_countryCode]}\'s Data',
       );
       try {
-        final response = await _nCovidRepository.getCountryStats(
+        final globalDataResponse =
+            await _theVirusTrackerApiRepository.getGlobalData();
+        final countryDataResponse =
+            await _theVirusTrackerApiRepository.getCountryData(
           countryCode: _countryCode,
         );
-        if (response.statusCode == 200) {
+        if (globalDataResponse.statusCode == 200 &&
+            countryDataResponse.statusCode == 200) {
           yield DataState(
-            nCovidData: NCovidData.fromJson(response.body),
-            newsItems: jsonDecode(response.body)['countrynewsitems'],
+            globalData: Global.fromJson(globalDataResponse.body),
+            countryData: Country.fromJson(countryDataResponse.body),
+            countryNewsItems:
+                jsonDecode(countryDataResponse.body)['countrynewsitems'],
             countryCode: _countryCode,
           );
         } else {
           yield ErrorState(
-            errorMessage: response.body.toString(),
+            errorMessage: globalDataResponse.body.toString() +
+                '\n' +
+                countryDataResponse.body.toString(),
           );
         }
       } catch (e) {

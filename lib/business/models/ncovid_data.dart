@@ -8,25 +8,95 @@ import 'serializers.dart';
 
 part 'ncovid_data.g.dart';
 
-abstract class NCovidData implements Built<NCovidData, NCovidDataBuilder> {
+abstract class Global implements Built<Global, GlobalBuilder> {
+  @nullable
+  @BuiltValueField(wireName: 'results')
+  BuiltList<GlobalData> get globalData;
+
+  Global._();
+
+  factory Global([updates(GlobalBuilder b)]) = _$Global;
+
+  String toJson() {
+    return json.encode(serializers.serializeWith(Global.serializer, this));
+  }
+
+  static Global fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        Global.serializer, json.decode(jsonString));
+  }
+
+  static Serializer<Global> get serializer => _$globalSerializer;
+}
+
+abstract class GlobalData implements Built<GlobalData, GlobalDataBuilder> {
+  @nullable
+  @BuiltValueField(wireName: 'total_cases')
+  int get totalCases;
+
+  @nullable
+  @BuiltValueField(wireName: 'total_recovered')
+  int get totalRecovered;
+
+  @nullable
+  @BuiltValueField(wireName: 'total_unresolved')
+  int get totalUnresolved;
+
+  @nullable
+  @BuiltValueField(wireName: 'total_deaths')
+  int get totalDeaths;
+
+  @nullable
+  @BuiltValueField(wireName: 'total_new_cases_today')
+  int get totalNewCasesToday;
+
+  @nullable
+  @BuiltValueField(wireName: 'total_new_deaths_today')
+  int get totalNewDeathsToday;
+
+  @nullable
+  @BuiltValueField(wireName: 'total_active_cases')
+  int get totalActiveCases;
+
+  @nullable
+  @BuiltValueField(wireName: 'total_serious_cases')
+  int get totalSeriousCases;
+
+  GlobalData._();
+
+  factory GlobalData([updates(GlobalDataBuilder b)]) = _$GlobalData;
+
+  String toJson() {
+    return json.encode(serializers.serializeWith(GlobalData.serializer, this));
+  }
+
+  static GlobalData fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        GlobalData.serializer, json.decode(jsonString));
+  }
+
+  static Serializer<GlobalData> get serializer => _$globalDataSerializer;
+}
+
+abstract class Country implements Built<Country, CountryBuilder> {
   @nullable
   @BuiltValueField(wireName: 'countrydata')
   BuiltList<CountryData> get countryData;
 
-  NCovidData._();
+  Country._();
 
-  factory NCovidData([updates(NCovidDataBuilder b)]) = _$NCovidData;
+  factory Country([updates(CountryBuilder b)]) = _$Country;
 
   String toJson() {
-    return json.encode(serializers.serializeWith(NCovidData.serializer, this));
+    return json.encode(serializers.serializeWith(Country.serializer, this));
   }
 
-  static NCovidData fromJson(String jsonString) {
+  static Country fromJson(String jsonString) {
     return serializers.deserializeWith(
-        NCovidData.serializer, json.decode(jsonString));
+        Country.serializer, json.decode(jsonString));
   }
 
-  static Serializer<NCovidData> get serializer => _$nCovidDataSerializer;
+  static Serializer<Country> get serializer => _$countrySerializer;
 }
 
 abstract class CountryData implements Built<CountryData, CountryDataBuilder> {

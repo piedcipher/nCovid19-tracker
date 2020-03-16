@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ncovidtracker/business/states/home.dart';
 
-class CountryDataTab extends StatelessWidget {
+class GlobalDataTab extends StatelessWidget {
   final DataState homeState;
 
-  const CountryDataTab({
+  GlobalDataTab({
     @required this.homeState,
   });
 
@@ -14,50 +14,49 @@ class CountryDataTab extends StatelessWidget {
       children: <Widget>[
         ListTile(
           onTap: () {},
-          title: Text(
-              homeState.countryData.countryData.first.totalCases.toString()),
+          title:
+              Text(homeState.globalData.globalData.first.totalCases.toString()),
           subtitle: Text('Total Cases'),
         ),
         ListTile(
           onTap: () {},
-          title: Text(homeState.countryData.countryData.first.totalRecovered
-              .toString()),
+          title: Text(
+              homeState.globalData.globalData.first.totalRecovered.toString()),
           subtitle: Text('Total Recovered'),
         ),
         ListTile(
           onTap: () {},
-          title: Text(homeState.countryData.countryData.first.totalUnresolved
-              .toString()),
+          title: Text(
+              homeState.globalData.globalData.first.totalUnresolved.toString()),
           subtitle: Text('Total Unresolved'),
         ),
         ListTile(
           onTap: () {},
           title: Text(
-              homeState.countryData.countryData.first.totalDeaths.toString()),
+              homeState.globalData.globalData.first.totalDeaths.toString()),
           subtitle: Text('Total Deaths'),
         ),
         ListTile(
           onTap: () {},
-          title: Text(homeState.countryData.countryData.first.totalNewCasesToday
+          title: Text(homeState.globalData.globalData.first.totalNewCasesToday
               .toString()),
           subtitle: Text('Total New Cases Today'),
         ),
         ListTile(
           onTap: () {},
-          title: Text(homeState
-              .countryData.countryData.first.totalNewDeathsToday
+          title: Text(homeState.globalData.globalData.first.totalNewDeathsToday
               .toString()),
           subtitle: Text('Total New Deaths Today'),
         ),
         ListTile(
           onTap: () {},
-          title: Text(homeState.countryData.countryData.first.totalActiveCases
+          title: Text(homeState.globalData.globalData.first.totalActiveCases
               .toString()),
           subtitle: Text('Total Active Cases'),
         ),
         ListTile(
           onTap: () {},
-          title: Text(homeState.countryData.countryData.first.totalSeriousCases
+          title: Text(homeState.globalData.globalData.first.totalSeriousCases
               .toString()),
           subtitle: Text('Total Serious Cases'),
         ),
