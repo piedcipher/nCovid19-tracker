@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ncovidtracker/business/models/ncovid_data.dart';
+import 'package:ncovidtracker/business/models/serializers.dart';
 import 'package:ncovidtracker/business/states/home.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,8 +19,12 @@ class CountryNewsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (context, index) {
-        final newsItem = homeState.newsItems.first[
-            (homeState.newsItems.first.keys.length - 1 - index).toString()];
+        final newsItem = serializers.deserializeWith(
+            CountryNewsItem.serializer,
+            homeState.newsItems.first[
+                (homeState.newsItems.first.keys.length - 1 - index)
+                    .toString()]);
+
         return ListTile(
           onTap: kIsWeb ||
                   Platform.isWindows ||
@@ -27,7 +33,7 @@ class CountryNewsTab extends StatelessWidget {
               ? () async {
                   await Clipboard.setData(
                     ClipboardData(
-                      text: newsItem['url'],
+                      text: newsItem.url,
                     ),
                   );
                   Scaffold.of(context).showSnackBar(
@@ -37,19 +43,18 @@ class CountryNewsTab extends StatelessWidget {
                   );
                 }
               : () async {
-                  if (await canLaunch(newsItem['url']))
-                    await launch(newsItem['url']);
+                  if (await canLaunch(newsItem.url)) await launch(newsItem.url);
                 },
           title: Text(
-            newsItem['title'],
+            newsItem.title,
           ),
           subtitle: Text(
-            newsItem['time'],
+            newsItem.time,
           ),
           trailing: Container(
             width: 150,
             child: Image.network(
-              newsItem['image'],
+              newsItem.image,
               fit: BoxFit.fitWidth,
             ),
           ),

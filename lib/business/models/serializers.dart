@@ -8,9 +8,8 @@ part 'serializers.g.dart';
 @SerializersFor(const [
   NCovidData,
   CountryData,
-  CountryNewsItems,
+  CountryNewsItem,
   Info,
-  NewsItem,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

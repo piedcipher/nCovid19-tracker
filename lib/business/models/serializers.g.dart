@@ -8,10 +8,9 @@ part of 'serializers.dart';
 
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CountryData.serializer)
-      ..add(CountryNewsItems.serializer)
+      ..add(CountryNewsItem.serializer)
       ..add(Info.serializer)
       ..add(NCovidData.serializer)
-      ..add(NewsItem.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(CountryData)]),
           () => new ListBuilder<CountryData>()))

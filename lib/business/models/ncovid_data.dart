@@ -13,10 +13,6 @@ abstract class NCovidData implements Built<NCovidData, NCovidDataBuilder> {
   @BuiltValueField(wireName: 'countrydata')
   BuiltList<CountryData> get countryData;
 
-//  @nullable
-//  @BuiltValueField(wireName: 'countrynewsitems')
-//  BuiltList<CountryNewsItems> get countryNewsItems;
-
   NCovidData._();
 
   factory NCovidData([updates(NCovidDataBuilder b)]) = _$NCovidData;
@@ -68,7 +64,7 @@ abstract class CountryData implements Built<CountryData, CountryDataBuilder> {
   int get totalActiveCases;
 
   @nullable
-  @BuiltValueField(wireName: 'total_serius_cases')
+  @BuiltValueField(wireName: 'total_serious_cases')
   int get totalSeriousCases;
 
   factory CountryData([updates(CountryDataBuilder b)]) = _$CountryData;
@@ -115,30 +111,9 @@ abstract class Info implements Built<Info, InfoBuilder> {
   static Serializer<Info> get serializer => _$infoSerializer;
 }
 
-abstract class CountryNewsItems
-    implements Built<CountryNewsItems, CountryNewsItemsBuilder> {
-  CountryNewsItems._();
-
-  @nullable
-  factory CountryNewsItems([updates(CountryNewsItemsBuilder b)]) =
-      _$CountryNewsItems;
-
-  String toJson() {
-    return json
-        .encode(serializers.serializeWith(CountryNewsItems.serializer, this));
-  }
-
-  static CountryNewsItems fromJson(String jsonString) {
-    return serializers.deserializeWith(
-        CountryNewsItems.serializer, json.decode(jsonString));
-  }
-
-  static Serializer<CountryNewsItems> get serializer =>
-      _$countryNewsItemsSerializer;
-}
-
-abstract class NewsItem implements Built<NewsItem, NewsItemBuilder> {
-  NewsItem._();
+abstract class CountryNewsItem
+    implements Built<CountryNewsItem, CountryNewsItemBuilder> {
+  CountryNewsItem._();
 
   @nullable
   @BuiltValueField(wireName: 'newsid')
@@ -157,16 +132,19 @@ abstract class NewsItem implements Built<NewsItem, NewsItemBuilder> {
   String get url;
 
   @nullable
-  factory NewsItem([updates(NewsItemBuilder b)]) = _$NewsItem;
+  factory CountryNewsItem([updates(CountryNewsItemBuilder b)]) =
+      _$CountryNewsItem;
 
   String toJson() {
-    return json.encode(serializers.serializeWith(NewsItem.serializer, this));
+    return json
+        .encode(serializers.serializeWith(CountryNewsItem.serializer, this));
   }
 
-  static NewsItem fromJson(String jsonString) {
+  static CountryNewsItem fromJson(String jsonString) {
     return serializers.deserializeWith(
-        NewsItem.serializer, json.decode(jsonString));
+        CountryNewsItem.serializer, json.decode(jsonString));
   }
 
-  static Serializer<NewsItem> get serializer => _$newsItemSerializer;
+  static Serializer<CountryNewsItem> get serializer =>
+      _$countryNewsItemSerializer;
 }

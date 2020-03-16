@@ -9,9 +9,8 @@ part of 'ncovid_data.dart';
 Serializer<NCovidData> _$nCovidDataSerializer = new _$NCovidDataSerializer();
 Serializer<CountryData> _$countryDataSerializer = new _$CountryDataSerializer();
 Serializer<Info> _$infoSerializer = new _$InfoSerializer();
-Serializer<CountryNewsItems> _$countryNewsItemsSerializer =
-    new _$CountryNewsItemsSerializer();
-Serializer<NewsItem> _$newsItemSerializer = new _$NewsItemSerializer();
+Serializer<CountryNewsItem> _$countryNewsItemSerializer =
+    new _$CountryNewsItemSerializer();
 
 class _$NCovidDataSerializer implements StructuredSerializer<NCovidData> {
   @override
@@ -117,7 +116,7 @@ class _$CountryDataSerializer implements StructuredSerializer<CountryData> {
     }
     if (object.totalSeriousCases != null) {
       result
-        ..add('total_serius_cases')
+        ..add('total_serious_cases')
         ..add(serializers.serialize(object.totalSeriousCases,
             specifiedType: const FullType(int)));
     }
@@ -167,7 +166,7 @@ class _$CountryDataSerializer implements StructuredSerializer<CountryData> {
           result.totalActiveCases = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'total_serius_cases':
+        case 'total_serious_cases':
           result.totalSeriousCases = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
@@ -249,35 +248,15 @@ class _$InfoSerializer implements StructuredSerializer<Info> {
   }
 }
 
-class _$CountryNewsItemsSerializer
-    implements StructuredSerializer<CountryNewsItems> {
+class _$CountryNewsItemSerializer
+    implements StructuredSerializer<CountryNewsItem> {
   @override
-  final Iterable<Type> types = const [CountryNewsItems, _$CountryNewsItems];
+  final Iterable<Type> types = const [CountryNewsItem, _$CountryNewsItem];
   @override
-  final String wireName = 'CountryNewsItems';
+  final String wireName = 'CountryNewsItem';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, CountryNewsItems object,
-      {FullType specifiedType = FullType.unspecified}) {
-    return <Object>[];
-  }
-
-  @override
-  CountryNewsItems deserialize(
-      Serializers serializers, Iterable<Object> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    return new CountryNewsItemsBuilder().build();
-  }
-}
-
-class _$NewsItemSerializer implements StructuredSerializer<NewsItem> {
-  @override
-  final Iterable<Type> types = const [NewsItem, _$NewsItem];
-  @override
-  final String wireName = 'NewsItem';
-
-  @override
-  Iterable<Object> serialize(Serializers serializers, NewsItem object,
+  Iterable<Object> serialize(Serializers serializers, CountryNewsItem object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[];
     if (object.newsId != null) {
@@ -314,9 +293,10 @@ class _$NewsItemSerializer implements StructuredSerializer<NewsItem> {
   }
 
   @override
-  NewsItem deserialize(Serializers serializers, Iterable<Object> serialized,
+  CountryNewsItem deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new NewsItemBuilder();
+    final result = new CountryNewsItemBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -741,66 +721,7 @@ class InfoBuilder implements Builder<Info, InfoBuilder> {
   }
 }
 
-class _$CountryNewsItems extends CountryNewsItems {
-  factory _$CountryNewsItems(
-          [void Function(CountryNewsItemsBuilder) updates]) =>
-      (new CountryNewsItemsBuilder()..update(updates)).build();
-
-  _$CountryNewsItems._() : super._();
-
-  @override
-  CountryNewsItems rebuild(void Function(CountryNewsItemsBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  CountryNewsItemsBuilder toBuilder() =>
-      new CountryNewsItemsBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is CountryNewsItems;
-  }
-
-  @override
-  int get hashCode {
-    return 595373972;
-  }
-
-  @override
-  String toString() {
-    return newBuiltValueToStringHelper('CountryNewsItems').toString();
-  }
-}
-
-class CountryNewsItemsBuilder
-    implements Builder<CountryNewsItems, CountryNewsItemsBuilder> {
-  _$CountryNewsItems _$v;
-
-  CountryNewsItemsBuilder();
-
-  @override
-  void replace(CountryNewsItems other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
-    _$v = other as _$CountryNewsItems;
-  }
-
-  @override
-  void update(void Function(CountryNewsItemsBuilder) updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  _$CountryNewsItems build() {
-    final _$result = _$v ?? new _$CountryNewsItems._();
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$NewsItem extends NewsItem {
+class _$CountryNewsItem extends CountryNewsItem {
   @override
   final String newsId;
   @override
@@ -812,23 +733,25 @@ class _$NewsItem extends NewsItem {
   @override
   final String url;
 
-  factory _$NewsItem([void Function(NewsItemBuilder) updates]) =>
-      (new NewsItemBuilder()..update(updates)).build();
+  factory _$CountryNewsItem([void Function(CountryNewsItemBuilder) updates]) =>
+      (new CountryNewsItemBuilder()..update(updates)).build();
 
-  _$NewsItem._({this.newsId, this.title, this.image, this.time, this.url})
+  _$CountryNewsItem._(
+      {this.newsId, this.title, this.image, this.time, this.url})
       : super._();
 
   @override
-  NewsItem rebuild(void Function(NewsItemBuilder) updates) =>
+  CountryNewsItem rebuild(void Function(CountryNewsItemBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  NewsItemBuilder toBuilder() => new NewsItemBuilder()..replace(this);
+  CountryNewsItemBuilder toBuilder() =>
+      new CountryNewsItemBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is NewsItem &&
+    return other is CountryNewsItem &&
         newsId == other.newsId &&
         title == other.title &&
         image == other.image &&
@@ -846,7 +769,7 @@ class _$NewsItem extends NewsItem {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('NewsItem')
+    return (newBuiltValueToStringHelper('CountryNewsItem')
           ..add('newsId', newsId)
           ..add('title', title)
           ..add('image', image)
@@ -856,8 +779,9 @@ class _$NewsItem extends NewsItem {
   }
 }
 
-class NewsItemBuilder implements Builder<NewsItem, NewsItemBuilder> {
-  _$NewsItem _$v;
+class CountryNewsItemBuilder
+    implements Builder<CountryNewsItem, CountryNewsItemBuilder> {
+  _$CountryNewsItem _$v;
 
   String _newsId;
   String get newsId => _$this._newsId;
@@ -879,9 +803,9 @@ class NewsItemBuilder implements Builder<NewsItem, NewsItemBuilder> {
   String get url => _$this._url;
   set url(String url) => _$this._url = url;
 
-  NewsItemBuilder();
+  CountryNewsItemBuilder();
 
-  NewsItemBuilder get _$this {
+  CountryNewsItemBuilder get _$this {
     if (_$v != null) {
       _newsId = _$v.newsId;
       _title = _$v.title;
@@ -894,22 +818,22 @@ class NewsItemBuilder implements Builder<NewsItem, NewsItemBuilder> {
   }
 
   @override
-  void replace(NewsItem other) {
+  void replace(CountryNewsItem other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$NewsItem;
+    _$v = other as _$CountryNewsItem;
   }
 
   @override
-  void update(void Function(NewsItemBuilder) updates) {
+  void update(void Function(CountryNewsItemBuilder) updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$NewsItem build() {
+  _$CountryNewsItem build() {
     final _$result = _$v ??
-        new _$NewsItem._(
+        new _$CountryNewsItem._(
             newsId: newsId, title: title, image: image, time: time, url: url);
     replace(_$result);
     return _$result;
