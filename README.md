@@ -7,12 +7,6 @@
 ## Screeshots
 <table>
   <tr>
-    <td>Linux</td>
-    <td>
-      <img src="https://raw.githubusercontent.com/piedcipher/nCovid19-tracker/master/readme-medias/linux.png" />
-    </td>
-  </tr>
-  <tr>
     <td>Web</td>
     <td>
       <img src="https://raw.githubusercontent.com/piedcipher/nCovid19-tracker/master/readme-medias/web.png" />
