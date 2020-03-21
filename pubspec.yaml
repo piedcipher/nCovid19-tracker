@@ -1,6 +1,12 @@
 name: ncovidtracker
-description: A new Flutter application.
+description: nCovid19 Tracker built using Flutter & Coronavirus Tracker API.
 version: 1.0.0+1
+
+authors:
+  - Tirth Patel
+repository: https://github.com/piedcipher/nCovid19-tracker
+homepage: https://github.com/piedcipher/nCovid19-tracker
+issue_tracker: https://github.com/piedcipher/nCovid19-tracker/issues
 
 environment:
   sdk: ">=2.3.0 <3.0.0"
