@@ -9,7 +9,6 @@ part of 'serializers.dart';
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Country.serializer)
       ..add(CountryData.serializer)
-      ..add(CountryNewsItem.serializer)
       ..add(Global.serializer)
       ..add(GlobalData.serializer)
       ..add(Info.serializer)

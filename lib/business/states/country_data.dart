@@ -20,12 +20,10 @@ class CountryDataLoadingState extends CountryDataState {
 
 class CountryDataSuccessState extends CountryDataState {
   final Country countryData;
-  final List<dynamic> countryNewsItems;
   final CountryCode countryCode;
 
   const CountryDataSuccessState({
     @required this.countryData,
-    @required this.countryNewsItems,
     @required this.countryCode,
   });
 }

@@ -8,7 +8,6 @@ import 'package:ncovidtracker/business/events/global_data.dart';
 import 'package:ncovidtracker/business/states/country_data.dart';
 import 'package:ncovidtracker/business/states/global_data.dart';
 import 'package:ncovidtracker/ui/screens/home/widgets/country_data_tab.dart';
-import 'package:ncovidtracker/ui/screens/home/widgets/country_news_tab.dart';
 import 'package:ncovidtracker/ui/screens/home/widgets/global_data_tab.dart';
 import 'package:ncovidtracker/ui/widgets/error.dart';
 import 'package:ncovidtracker/ui/widgets/loading.dart';
@@ -18,7 +17,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
@@ -32,9 +31,6 @@ class HomeScreen extends StatelessWidget {
               Tab(
                 child: Text('Local Data'),
               ),
-              Tab(
-                child: Text('Local News'),
-              )
             ],
           ),
         ),
@@ -91,40 +87,6 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                     child: CountryDataTab(
-                      successState: state,
-                    ),
-                  );
-                } else if (state is CountryDataErrorState) {
-                  return RefreshIndicator(
-                    onRefresh: () async {
-                      BlocProvider.of<CountryDataBloc>(context).add(
-                        GetCountryDataEvent(countryCode: CountryCode.IN),
-                      );
-                    },
-                    child: ErrorsWidget(
-                      errorMessage: state.errorMessage,
-                    ),
-                  );
-                }
-                return Container();
-              },
-            ),
-            BlocBuilder<CountryDataBloc, CountryDataState>(
-              builder: (context, state) {
-                if (state is CountryDataInitialState) {
-                  return Container();
-                } else if (state is CountryDataLoadingState) {
-                  return LoadingWidget(
-                    loadingMessage: state.loadingMessage,
-                  );
-                } else if (state is CountryDataSuccessState) {
-                  return RefreshIndicator(
-                    onRefresh: () async {
-                      BlocProvider.of<CountryDataBloc>(context).add(
-                        GetCountryDataEvent(countryCode: state.countryCode),
-                      );
-                    },
-                    child: CountryNewsTab(
                       successState: state,
                     ),
                   );

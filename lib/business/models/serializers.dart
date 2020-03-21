@@ -10,7 +10,6 @@ part 'serializers.g.dart';
   GlobalData,
   Country,
   CountryData,
-  CountryNewsItem,
   Info,
 ])
 final Serializers serializers =
