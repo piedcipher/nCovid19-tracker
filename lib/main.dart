@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ncovidtracker/business/blocs/home.dart';
-import 'package:ncovidtracker/business/events/home.dart';
+import 'package:ncovidtracker/business/blocs/country_data.dart';
+import 'package:ncovidtracker/business/blocs/global_data.dart';
+import 'package:ncovidtracker/business/events/country_data.dart';
+import 'package:ncovidtracker/business/events/global_data.dart';
 import 'package:ncovidtracker/ui/screens/home/home.dart';
 import 'package:ncovidtracker/utils/enums.dart';
 
@@ -11,12 +13,18 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<HomeBloc>(
-          create: (context) => HomeBloc()
+        BlocProvider<CountryDataBloc>(
+          create: (context) => CountryDataBloc()
             ..add(
-              GetDataEvent(
+              GetCountryDataEvent(
                 countryCode: CountryCode.IN,
               ),
+            ),
+        ),
+        BlocProvider<GlobalDataBloc>(
+          create: (context) => GlobalDataBloc()
+            ..add(
+              GetGlobalDataEvent(),
             ),
         ),
       ],

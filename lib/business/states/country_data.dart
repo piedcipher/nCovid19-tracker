@@ -2,40 +2,38 @@ import 'package:flutter/cupertino.dart';
 import 'package:ncovidtracker/business/models/ncovid_data.dart';
 import 'package:ncovidtracker/utils/enums.dart';
 
-abstract class HomeState {
-  const HomeState();
+abstract class CountryDataState {
+  const CountryDataState();
 }
 
-class InitialState extends HomeState {
-  const InitialState();
+class CountryDataInitialState extends CountryDataState {
+  const CountryDataInitialState();
 }
 
-class LoadingState extends HomeState {
+class CountryDataLoadingState extends CountryDataState {
   final String loadingMessage;
 
-  const LoadingState({
+  const CountryDataLoadingState({
     @required this.loadingMessage,
   });
 }
 
-class DataState extends HomeState {
-  final Global globalData;
+class CountryDataSuccessState extends CountryDataState {
   final Country countryData;
   final List<dynamic> countryNewsItems;
   final CountryCode countryCode;
 
-  const DataState({
-    @required this.globalData,
+  const CountryDataSuccessState({
     @required this.countryData,
     @required this.countryNewsItems,
     @required this.countryCode,
   });
 }
 
-class ErrorState extends HomeState {
+class CountryDataErrorState extends CountryDataState {
   final String errorMessage;
 
-  const ErrorState({
+  const CountryDataErrorState({
     @required this.errorMessage,
   });
 }

@@ -1,126 +1,151 @@
-import 'dart:io';
-
 import 'package:demoji/demoji.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ncovidtracker/business/blocs/home.dart';
-import 'package:ncovidtracker/business/events/home.dart';
-import 'package:ncovidtracker/business/states/home.dart';
+import 'package:ncovidtracker/business/blocs/country_data.dart';
+import 'package:ncovidtracker/business/blocs/global_data.dart';
+import 'package:ncovidtracker/business/events/country_data.dart';
+import 'package:ncovidtracker/business/events/global_data.dart';
+import 'package:ncovidtracker/business/states/country_data.dart';
+import 'package:ncovidtracker/business/states/global_data.dart';
 import 'package:ncovidtracker/ui/screens/home/widgets/country_data_tab.dart';
 import 'package:ncovidtracker/ui/screens/home/widgets/country_news_tab.dart';
 import 'package:ncovidtracker/ui/screens/home/widgets/global_data_tab.dart';
 import 'package:ncovidtracker/ui/widgets/error.dart';
 import 'package:ncovidtracker/ui/widgets/loading.dart';
-import 'package:ncovidtracker/utils/constants.dart';
+import 'package:ncovidtracker/utils/enums.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      bloc: BlocProvider.of<HomeBloc>(context),
-      builder: (context, homeState) {
-        if (homeState is InitialState) {
-          return Container();
-        } else if (homeState is LoadingState) {
-          return LoadingWidget(
-            loadingMessage: homeState.loadingMessage,
-          );
-        } else if (homeState is DataState) {
-          return DefaultTabController(
-            length: 3,
-            initialIndex: 0,
-            child: Scaffold(
-              appBar: AppBar(
-                title: kIsWeb ||
-                        Platform.isWindows ||
-                        Platform.isLinux ||
-                        Platform.isMacOS
-                    ? Text('nCovid19 Tracker')
-                    : Text(Demoji.microbe),
-                actions: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(right: 4),
-                    child: DropdownButton(
-                      underline: Container(),
-                      onChanged: (_newCountryCode) {
-                        BlocProvider.of<HomeBloc>(context).add(
-                          GetDataEvent(countryCode: _newCountryCode),
-                        );
-                      },
-                      value: homeState.countryCode,
-                      items: [
-                        ...countryCodeMap.keys.map(
-                          (countryCode) => DropdownMenuItem(
-                            child: Text(countryCodeMap[countryCode]),
-                            value: countryCode,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-                bottom: TabBar(
-                  controller: DefaultTabController.of(context),
-                  tabs: <Widget>[
-                    Tab(
-                      child: Text('Global Data'),
-                    ),
-                    Tab(
-                      child: Text('Local Data'),
-                    ),
-                    Tab(
-                      child: Text('Local News'),
-                    )
-                  ],
-                ),
+    return DefaultTabController(
+      length: 3,
+      initialIndex: 0,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('${Demoji.microbe} nCovid19 Tracker'),
+          bottom: TabBar(
+            controller: DefaultTabController.of(context),
+            tabs: <Widget>[
+              Tab(
+                child: Text('Global Data'),
               ),
-              body: TabBarView(
-                controller: DefaultTabController.of(context),
-                children: <Widget>[
-                  RefreshIndicator(
+              Tab(
+                child: Text('Local Data'),
+              ),
+              Tab(
+                child: Text('Local News'),
+              )
+            ],
+          ),
+        ),
+        body: TabBarView(
+          controller: DefaultTabController.of(context),
+          children: <Widget>[
+            BlocBuilder<GlobalDataBloc, GlobalDataState>(
+              builder: (context, state) {
+                if (state is GlobalDataInitialState) {
+                  return Container();
+                } else if (state is GlobalDataLoadingState) {
+                  return LoadingWidget(
+                    loadingMessage: state.loadingMessage,
+                  );
+                } else if (state is GlobalDataSuccessState) {
+                  return RefreshIndicator(
                     onRefresh: () async {
-                      BlocProvider.of<HomeBloc>(context).add(
-                        GetDataEvent(
-                          countryCode: homeState.countryCode,
-                        ),
+                      BlocProvider.of<GlobalDataBloc>(context).add(
+                        GetGlobalDataEvent(),
                       );
                     },
                     child: GlobalDataTab(
-                      homeState: homeState,
+                      successState: state,
                     ),
-                  ),
-                  RefreshIndicator(
+                  );
+                } else if (state is GlobalDataErrorState) {
+                  return RefreshIndicator(
                     onRefresh: () async {
-                      BlocProvider.of<HomeBloc>(context).add(
-                        GetDataEvent(countryCode: homeState.countryCode),
+                      BlocProvider.of<GlobalDataBloc>(context).add(
+                        GetGlobalDataEvent(),
+                      );
+                    },
+                    child: ErrorsWidget(
+                      errorMessage: state.errorMessage,
+                    ),
+                  );
+                }
+                return Container();
+              },
+            ),
+            BlocBuilder<CountryDataBloc, CountryDataState>(
+              builder: (context, state) {
+                if (state is CountryDataInitialState) {
+                  return Container();
+                } else if (state is CountryDataLoadingState) {
+                  return LoadingWidget(
+                    loadingMessage: state.loadingMessage,
+                  );
+                } else if (state is CountryDataSuccessState) {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      BlocProvider.of<CountryDataBloc>(context).add(
+                        GetCountryDataEvent(countryCode: state.countryCode),
                       );
                     },
                     child: CountryDataTab(
-                      homeState: homeState,
+                      successState: state,
                     ),
-                  ),
-                  RefreshIndicator(
+                  );
+                } else if (state is CountryDataErrorState) {
+                  return RefreshIndicator(
                     onRefresh: () async {
-                      BlocProvider.of<HomeBloc>(context).add(
-                        GetDataEvent(countryCode: homeState.countryCode),
+                      BlocProvider.of<CountryDataBloc>(context).add(
+                        GetCountryDataEvent(countryCode: CountryCode.IN),
+                      );
+                    },
+                    child: ErrorsWidget(
+                      errorMessage: state.errorMessage,
+                    ),
+                  );
+                }
+                return Container();
+              },
+            ),
+            BlocBuilder<CountryDataBloc, CountryDataState>(
+              builder: (context, state) {
+                if (state is CountryDataInitialState) {
+                  return Container();
+                } else if (state is CountryDataLoadingState) {
+                  return LoadingWidget(
+                    loadingMessage: state.loadingMessage,
+                  );
+                } else if (state is CountryDataSuccessState) {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      BlocProvider.of<CountryDataBloc>(context).add(
+                        GetCountryDataEvent(countryCode: state.countryCode),
                       );
                     },
                     child: CountryNewsTab(
-                      homeState: homeState,
+                      successState: state,
                     ),
-                  ),
-                ],
-              ),
+                  );
+                } else if (state is CountryDataErrorState) {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      BlocProvider.of<CountryDataBloc>(context).add(
+                        GetCountryDataEvent(countryCode: CountryCode.IN),
+                      );
+                    },
+                    child: ErrorsWidget(
+                      errorMessage: state.errorMessage,
+                    ),
+                  );
+                }
+                return Container();
+              },
             ),
-          );
-        } else if (homeState is ErrorState) {
-          return ErrorsWidget(
-            errorMessage: homeState.errorMessage,
-          );
-        }
-        return Container();
-      },
+          ],
+        ),
+      ),
     );
   }
 }

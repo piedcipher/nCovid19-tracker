@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ncovidtracker/business/models/ncovid_data.dart';
 import 'package:ncovidtracker/business/models/serializers.dart';
-import 'package:ncovidtracker/business/states/home.dart';
+import 'package:ncovidtracker/business/states/country_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CountryNewsTab extends StatelessWidget {
-  final DataState homeState;
+  final CountryDataSuccessState successState;
 
   const CountryNewsTab({
-    @required this.homeState,
+    @required this.successState,
   });
 
   @override
@@ -21,8 +21,8 @@ class CountryNewsTab extends StatelessWidget {
       itemBuilder: (context, index) {
         final newsItem = serializers.deserializeWith(
             CountryNewsItem.serializer,
-            homeState.countryNewsItems.first[
-                (homeState.countryNewsItems.first.keys.length - 1 - index)
+            successState.countryNewsItems.first[
+                (successState.countryNewsItems.first.keys.length - 1 - index)
                     .toString()]);
 
         return ListTile(
@@ -60,7 +60,7 @@ class CountryNewsTab extends StatelessWidget {
           ),
         );
       },
-      itemCount: homeState.countryNewsItems.first.keys.length,
+      itemCount: successState.countryNewsItems.first.keys.length,
     );
   }
 }
