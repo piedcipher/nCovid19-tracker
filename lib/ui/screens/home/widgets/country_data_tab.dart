@@ -17,7 +17,6 @@ class CountryDataTab extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          margin: EdgeInsets.only(right: 4),
           child: DropdownButton(
             underline: Container(),
             onChanged: (_newCountryCode) {

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,7 +55,13 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       routes: {
-        '/': (context) => HomeScreen(),
+        '/': (context) => kIsWeb || Platform.isAndroid
+            ? HomeScreen()
+            : Scaffold(
+                body: Center(
+                  child: Text('This platform is not supported.'),
+                ),
+              ),
       },
       initialRoute: '/',
     );
