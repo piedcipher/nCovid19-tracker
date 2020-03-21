@@ -15,7 +15,7 @@ class GlobalDataBloc extends Bloc<GlobalDataEvent, GlobalDataState> {
   Stream<GlobalDataState> mapEventToState(GlobalDataEvent event) async* {
     if (event is GetGlobalDataEvent) {
       yield GlobalDataLoadingState(
-        loadingMessage: "Loading Worlds's Data",
+        loadingMessage: "Loading Global Data",
       );
       try {
         final globalDataResponse =
