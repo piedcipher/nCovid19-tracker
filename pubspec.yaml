@@ -12,10 +12,6 @@ dependencies:
   http:
   built_value:
   built_collection:
-  url_launcher:
-  shared_preferences:
-  demoji:
-  connectivity:
   cupertino_icons: ^0.1.3
 
 dev_dependencies:
