@@ -11,6 +11,8 @@ Serializer<GlobalData> _$globalDataSerializer = new _$GlobalDataSerializer();
 Serializer<Country> _$countrySerializer = new _$CountrySerializer();
 Serializer<CountryData> _$countryDataSerializer = new _$CountryDataSerializer();
 Serializer<Info> _$infoSerializer = new _$InfoSerializer();
+Serializer<CountryTimelineItem> _$countryTimelineItemSerializer =
+    new _$CountryTimelineItemSerializer();
 
 class _$GlobalSerializer implements StructuredSerializer<Global> {
   @override
@@ -395,6 +397,93 @@ class _$InfoSerializer implements StructuredSerializer<Info> {
         case 'source':
           result.source = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$CountryTimelineItemSerializer
+    implements StructuredSerializer<CountryTimelineItem> {
+  @override
+  final Iterable<Type> types = const [
+    CountryTimelineItem,
+    _$CountryTimelineItem
+  ];
+  @override
+  final String wireName = 'CountryTimelineItem';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, CountryTimelineItem object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[];
+    if (object.newDailyCases != null) {
+      result
+        ..add('new_daily_cases')
+        ..add(serializers.serialize(object.newDailyCases,
+            specifiedType: const FullType(int)));
+    }
+    if (object.newDailyDeaths != null) {
+      result
+        ..add('new_daily_deaths')
+        ..add(serializers.serialize(object.newDailyDeaths,
+            specifiedType: const FullType(int)));
+    }
+    if (object.totalCases != null) {
+      result
+        ..add('total_cases')
+        ..add(serializers.serialize(object.totalCases,
+            specifiedType: const FullType(int)));
+    }
+    if (object.totalRecoveries != null) {
+      result
+        ..add('total_recoveries')
+        ..add(serializers.serialize(object.totalRecoveries,
+            specifiedType: const FullType(int)));
+    }
+    if (object.totalDeaths != null) {
+      result
+        ..add('total_deaths')
+        ..add(serializers.serialize(object.totalDeaths,
+            specifiedType: const FullType(int)));
+    }
+    return result;
+  }
+
+  @override
+  CountryTimelineItem deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new CountryTimelineItemBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'new_daily_cases':
+          result.newDailyCases = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'new_daily_deaths':
+          result.newDailyDeaths = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'total_cases':
+          result.totalCases = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'total_recoveries':
+          result.totalRecoveries = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'total_deaths':
+          result.totalDeaths = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -1050,6 +1139,139 @@ class InfoBuilder implements Builder<Info, InfoBuilder> {
   _$Info build() {
     final _$result = _$v ??
         new _$Info._(ourId: ourId, title: title, code: code, source: source);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$CountryTimelineItem extends CountryTimelineItem {
+  @override
+  final int newDailyCases;
+  @override
+  final int newDailyDeaths;
+  @override
+  final int totalCases;
+  @override
+  final int totalRecoveries;
+  @override
+  final int totalDeaths;
+
+  factory _$CountryTimelineItem(
+          [void Function(CountryTimelineItemBuilder) updates]) =>
+      (new CountryTimelineItemBuilder()..update(updates)).build();
+
+  _$CountryTimelineItem._(
+      {this.newDailyCases,
+      this.newDailyDeaths,
+      this.totalCases,
+      this.totalRecoveries,
+      this.totalDeaths})
+      : super._();
+
+  @override
+  CountryTimelineItem rebuild(
+          void Function(CountryTimelineItemBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  CountryTimelineItemBuilder toBuilder() =>
+      new CountryTimelineItemBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is CountryTimelineItem &&
+        newDailyCases == other.newDailyCases &&
+        newDailyDeaths == other.newDailyDeaths &&
+        totalCases == other.totalCases &&
+        totalRecoveries == other.totalRecoveries &&
+        totalDeaths == other.totalDeaths;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc(
+            $jc($jc($jc(0, newDailyCases.hashCode), newDailyDeaths.hashCode),
+                totalCases.hashCode),
+            totalRecoveries.hashCode),
+        totalDeaths.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('CountryTimelineItem')
+          ..add('newDailyCases', newDailyCases)
+          ..add('newDailyDeaths', newDailyDeaths)
+          ..add('totalCases', totalCases)
+          ..add('totalRecoveries', totalRecoveries)
+          ..add('totalDeaths', totalDeaths))
+        .toString();
+  }
+}
+
+class CountryTimelineItemBuilder
+    implements Builder<CountryTimelineItem, CountryTimelineItemBuilder> {
+  _$CountryTimelineItem _$v;
+
+  int _newDailyCases;
+  int get newDailyCases => _$this._newDailyCases;
+  set newDailyCases(int newDailyCases) => _$this._newDailyCases = newDailyCases;
+
+  int _newDailyDeaths;
+  int get newDailyDeaths => _$this._newDailyDeaths;
+  set newDailyDeaths(int newDailyDeaths) =>
+      _$this._newDailyDeaths = newDailyDeaths;
+
+  int _totalCases;
+  int get totalCases => _$this._totalCases;
+  set totalCases(int totalCases) => _$this._totalCases = totalCases;
+
+  int _totalRecoveries;
+  int get totalRecoveries => _$this._totalRecoveries;
+  set totalRecoveries(int totalRecoveries) =>
+      _$this._totalRecoveries = totalRecoveries;
+
+  int _totalDeaths;
+  int get totalDeaths => _$this._totalDeaths;
+  set totalDeaths(int totalDeaths) => _$this._totalDeaths = totalDeaths;
+
+  CountryTimelineItemBuilder();
+
+  CountryTimelineItemBuilder get _$this {
+    if (_$v != null) {
+      _newDailyCases = _$v.newDailyCases;
+      _newDailyDeaths = _$v.newDailyDeaths;
+      _totalCases = _$v.totalCases;
+      _totalRecoveries = _$v.totalRecoveries;
+      _totalDeaths = _$v.totalDeaths;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(CountryTimelineItem other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$CountryTimelineItem;
+  }
+
+  @override
+  void update(void Function(CountryTimelineItemBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$CountryTimelineItem build() {
+    final _$result = _$v ??
+        new _$CountryTimelineItem._(
+            newDailyCases: newDailyCases,
+            newDailyDeaths: newDailyDeaths,
+            totalCases: totalCases,
+            totalRecoveries: totalRecoveries,
+            totalDeaths: totalDeaths);
     replace(_$result);
     return _$result;
   }

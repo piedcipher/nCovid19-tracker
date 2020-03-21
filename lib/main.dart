@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ncovidtracker/business/blocs/country_data.dart';
+import 'package:ncovidtracker/business/blocs/country_timeline.dart';
 import 'package:ncovidtracker/business/blocs/global_data.dart';
 import 'package:ncovidtracker/business/events/country_data.dart';
+import 'package:ncovidtracker/business/events/country_timeline.dart';
 import 'package:ncovidtracker/business/events/global_data.dart';
 import 'package:ncovidtracker/ui/screens/home/home.dart';
 import 'package:ncovidtracker/utils/enums.dart';
@@ -25,6 +27,14 @@ void main() async {
           create: (context) => GlobalDataBloc()
             ..add(
               GetGlobalDataEvent(),
+            ),
+        ),
+        BlocProvider<CountryTimelineBloc>(
+          create: (context) => CountryTimelineBloc()
+            ..add(
+              GetCountryTimelineEvent(
+                countryCode: CountryCode.IN,
+              ),
             ),
         ),
       ],

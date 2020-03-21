@@ -180,3 +180,44 @@ abstract class Info implements Built<Info, InfoBuilder> {
 
   static Serializer<Info> get serializer => _$infoSerializer;
 }
+
+abstract class CountryTimelineItem
+    implements Built<CountryTimelineItem, CountryTimelineItemBuilder> {
+  CountryTimelineItem._();
+
+  @nullable
+  @BuiltValueField(wireName: 'new_daily_cases')
+  int get newDailyCases;
+
+  @nullable
+  @BuiltValueField(wireName: 'new_daily_deaths')
+  int get newDailyDeaths;
+
+  @nullable
+  @BuiltValueField(wireName: 'total_cases')
+  int get totalCases;
+
+  @nullable
+  @BuiltValueField(wireName: 'total_recoveries')
+  int get totalRecoveries;
+
+  @nullable
+  @BuiltValueField(wireName: 'total_deaths')
+  int get totalDeaths;
+
+  factory CountryTimelineItem([updates(CountryTimelineItemBuilder b)]) =
+      _$CountryTimelineItem;
+
+  String toJson() {
+    return json.encode(
+        serializers.serializeWith(CountryTimelineItem.serializer, this));
+  }
+
+  static CountryTimelineItem fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        CountryTimelineItem.serializer, json.decode(jsonString));
+  }
+
+  static Serializer<CountryTimelineItem> get serializer =>
+      _$countryTimelineItemSerializer;
+}

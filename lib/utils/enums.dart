@@ -179,3 +179,13 @@ enum CountryCode {
   ZM,
   ZW,
 }
+
+enum CountryTimelineSortOption {
+  DateAscending,
+  DateDescending,
+  TotalCases,
+  TotalDeaths,
+  TotalRecoveries,
+  NewDailyCases,
+  NewDailyDeaths,
+}

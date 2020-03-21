@@ -181,3 +181,13 @@ final Map<CountryCode, String> countryCodeMap = {
   CountryCode.ZM: 'Zambia',
   CountryCode.ZW: 'Zimbabwe',
 };
+
+final Map<CountryTimelineSortOption, String> countryTimelineSortOptionMap = {
+  CountryTimelineSortOption.DateAscending: 'Date Ascending',
+  CountryTimelineSortOption.DateDescending: 'Date Descedning',
+  CountryTimelineSortOption.TotalCases: 'Total Cases',
+  CountryTimelineSortOption.TotalRecoveries: 'Total Recoveries',
+  CountryTimelineSortOption.TotalDeaths: 'Total Deaths',
+  CountryTimelineSortOption.NewDailyCases: 'New Daily Cases',
+  CountryTimelineSortOption.NewDailyDeaths: 'New Daily Deaths',
+};

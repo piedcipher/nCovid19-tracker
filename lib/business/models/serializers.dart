@@ -11,6 +11,7 @@ part 'serializers.g.dart';
   Country,
   CountryData,
   Info,
+  CountryTimelineItem,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

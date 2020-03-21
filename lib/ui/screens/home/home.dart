@@ -2,12 +2,16 @@ import 'package:demoji/demoji.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ncovidtracker/business/blocs/country_data.dart';
+import 'package:ncovidtracker/business/blocs/country_timeline.dart';
 import 'package:ncovidtracker/business/blocs/global_data.dart';
 import 'package:ncovidtracker/business/events/country_data.dart';
+import 'package:ncovidtracker/business/events/country_timeline.dart';
 import 'package:ncovidtracker/business/events/global_data.dart';
 import 'package:ncovidtracker/business/states/country_data.dart';
+import 'package:ncovidtracker/business/states/coutry_timeline.dart';
 import 'package:ncovidtracker/business/states/global_data.dart';
 import 'package:ncovidtracker/ui/screens/home/widgets/country_data_tab.dart';
+import 'package:ncovidtracker/ui/screens/home/widgets/country_timeline_tab.dart';
 import 'package:ncovidtracker/ui/screens/home/widgets/global_data_tab.dart';
 import 'package:ncovidtracker/ui/widgets/error.dart';
 import 'package:ncovidtracker/ui/widgets/loading.dart';
@@ -17,7 +21,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
@@ -30,6 +34,9 @@ class HomeScreen extends StatelessWidget {
               ),
               Tab(
                 child: Text('Local Data'),
+              ),
+              Tab(
+                child: Text('Local Timeline'),
               ),
             ],
           ),
@@ -95,6 +102,40 @@ class HomeScreen extends StatelessWidget {
                     onRefresh: () async {
                       BlocProvider.of<CountryDataBloc>(context).add(
                         GetCountryDataEvent(countryCode: CountryCode.IN),
+                      );
+                    },
+                    child: ErrorsWidget(
+                      errorMessage: state.errorMessage,
+                    ),
+                  );
+                }
+                return Container();
+              },
+            ),
+            BlocBuilder<CountryTimelineBloc, CountryTimelineState>(
+              builder: (context, state) {
+                if (state is CountryTimelineInitialState) {
+                  return Container();
+                } else if (state is CountryTimelineLoadingState) {
+                  return LoadingWidget(
+                    loadingMessage: state.loadingMessage,
+                  );
+                } else if (state is CountryTimelineSuccessState) {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      BlocProvider.of<CountryTimelineBloc>(context).add(
+                        GetCountryTimelineEvent(countryCode: state.countryCode),
+                      );
+                    },
+                    child: CountryTimelineTab(
+                      successState: state,
+                    ),
+                  );
+                } else if (state is CountryTimelineErrorState) {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      BlocProvider.of<CountryTimelineBloc>(context).add(
+                        GetCountryTimelineEvent(countryCode: CountryCode.IN),
                       );
                     },
                     child: ErrorsWidget(

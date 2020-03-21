@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:ncovidtracker/business/models/ncovid_data.dart';
 import 'package:ncovidtracker/utils/enums.dart';
 
