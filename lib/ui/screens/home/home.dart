@@ -1,4 +1,3 @@
-import 'package:demoji/demoji.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ncovidtracker/business/blocs/country_data.dart';
@@ -25,7 +24,7 @@ class HomeScreen extends StatelessWidget {
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('${Demoji.microbe} nCovid19 Tracker'),
+          title: Text('\u{1F9A0} nCovid19 Tracker'),
           bottom: TabBar(
             controller: DefaultTabController.of(context),
             tabs: <Widget>[
