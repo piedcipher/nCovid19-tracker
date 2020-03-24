@@ -16,11 +16,18 @@ import 'package:ncovidtracker/ui/widgets/error.dart';
 import 'package:ncovidtracker/ui/widgets/loading.dart';
 import 'package:ncovidtracker/utils/enums.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _currentBottomBarIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
@@ -29,13 +36,10 @@ class HomeScreen extends StatelessWidget {
             controller: DefaultTabController.of(context),
             tabs: <Widget>[
               Tab(
-                child: Text('Global Data'),
+                child: Text('Global'),
               ),
               Tab(
-                child: Text('Local Data'),
-              ),
-              Tab(
-                child: Text('Local Timeline'),
+                child: Text('Local'),
               ),
             ],
           ),
@@ -77,73 +81,95 @@ class HomeScreen extends StatelessWidget {
                 return Container();
               },
             ),
-            BlocBuilder<CountryDataBloc, CountryDataState>(
-              builder: (context, state) {
-                if (state is CountryDataInitialState) {
-                  return Container();
-                } else if (state is CountryDataLoadingState) {
-                  return LoadingWidget(
-                    loadingMessage: state.loadingMessage,
-                  );
-                } else if (state is CountryDataSuccessState) {
-                  return RefreshIndicator(
-                    onRefresh: () async {
-                      BlocProvider.of<CountryDataBloc>(context).add(
-                        GetCountryDataEvent(countryCode: state.countryCode),
+            Scaffold(
+              body: [
+                BlocBuilder<CountryDataBloc, CountryDataState>(
+                  builder: (context, state) {
+                    if (state is CountryDataInitialState) {
+                      return Container();
+                    } else if (state is CountryDataLoadingState) {
+                      return LoadingWidget(
+                        loadingMessage: state.loadingMessage,
                       );
-                    },
-                    child: CountryDataTab(
-                      successState: state,
-                    ),
-                  );
-                } else if (state is CountryDataErrorState) {
-                  return RefreshIndicator(
-                    onRefresh: () async {
-                      BlocProvider.of<CountryDataBloc>(context).add(
-                        GetCountryDataEvent(countryCode: CountryCode.IN),
+                    } else if (state is CountryDataSuccessState) {
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          BlocProvider.of<CountryDataBloc>(context).add(
+                            GetCountryDataEvent(countryCode: state.countryCode),
+                          );
+                        },
+                        child: CountryDataTab(
+                          successState: state,
+                        ),
                       );
-                    },
-                    child: ErrorsWidget(
-                      errorMessage: state.errorMessage,
-                    ),
-                  );
-                }
-                return Container();
-              },
-            ),
-            BlocBuilder<CountryTimelineBloc, CountryTimelineState>(
-              builder: (context, state) {
-                if (state is CountryTimelineInitialState) {
-                  return Container();
-                } else if (state is CountryTimelineLoadingState) {
-                  return LoadingWidget(
-                    loadingMessage: state.loadingMessage,
-                  );
-                } else if (state is CountryTimelineSuccessState) {
-                  return RefreshIndicator(
-                    onRefresh: () async {
-                      BlocProvider.of<CountryTimelineBloc>(context).add(
-                        GetCountryTimelineEvent(countryCode: state.countryCode),
+                    } else if (state is CountryDataErrorState) {
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          BlocProvider.of<CountryDataBloc>(context).add(
+                            GetCountryDataEvent(countryCode: CountryCode.IN),
+                          );
+                        },
+                        child: ErrorsWidget(
+                          errorMessage: state.errorMessage,
+                        ),
                       );
-                    },
-                    child: CountryTimelineTab(
-                      successState: state,
-                    ),
-                  );
-                } else if (state is CountryTimelineErrorState) {
-                  return RefreshIndicator(
-                    onRefresh: () async {
-                      BlocProvider.of<CountryTimelineBloc>(context).add(
-                        GetCountryTimelineEvent(countryCode: CountryCode.IN),
+                    }
+                    return Container();
+                  },
+                ),
+                BlocBuilder<CountryTimelineBloc, CountryTimelineState>(
+                  builder: (context, state) {
+                    if (state is CountryTimelineInitialState) {
+                      return Container();
+                    } else if (state is CountryTimelineLoadingState) {
+                      return LoadingWidget(
+                        loadingMessage: state.loadingMessage,
                       );
-                    },
-                    child: ErrorsWidget(
-                      errorMessage: state.errorMessage,
-                    ),
-                  );
-                }
-                return Container();
-              },
+                    } else if (state is CountryTimelineSuccessState) {
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          BlocProvider.of<CountryTimelineBloc>(context).add(
+                            GetCountryTimelineEvent(
+                                countryCode: state.countryCode),
+                          );
+                        },
+                        child: CountryTimelineTab(
+                          successState: state,
+                        ),
+                      );
+                    } else if (state is CountryTimelineErrorState) {
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          BlocProvider.of<CountryTimelineBloc>(context).add(
+                            GetCountryTimelineEvent(
+                                countryCode: CountryCode.IN),
+                          );
+                        },
+                        child: ErrorsWidget(
+                          errorMessage: state.errorMessage,
+                        ),
+                      );
+                    }
+                    return Container();
+                  },
+                )
+              ][_currentBottomBarIndex],
+              bottomNavigationBar: BottomNavigationBar(
+                onTap: (_newCurrentBottomBarIndex) => setState(
+                  () => _currentBottomBarIndex = _newCurrentBottomBarIndex,
+                ),
+                items: [
+                  BottomNavigationBarItem(
+                    title: Text('Data'),
+                    icon: Icon(Icons.data_usage),
+                  ),
+                  BottomNavigationBarItem(
+                    title: Text('Timeline'),
+                    icon: Icon(Icons.timeline),
+                  ),
+                ],
+                currentIndex: _currentBottomBarIndex,
+              ),
             ),
           ],
         ),
