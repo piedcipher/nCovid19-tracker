@@ -7,15 +7,25 @@
 ## Screeshots
 <table>
   <tr>
-    <td>Web</td>
+    <th>Web</th>
     <td>
-      <img src="https://raw.githubusercontent.com/piedcipher/nCovid19-tracker/master/readme-medias/web.png" />
+      <p align="center"><img src="https://raw.githubusercontent.com/piedcipher/nCovid19-tracker/master/readme-medias/web.png" /></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p align="center"><img src="https://raw.githubusercontent.com/piedcipher/nCovid19-tracker/master/readme-medias/pwa.png" /></p>
     </td>
   </tr>
   <tr>
     <td>Android</td>
     <td>
-      <img src="https://raw.githubusercontent.com/piedcipher/nCovid19-tracker/master/readme-medias/android.png" />
+      <p align="center"><img src="https://raw.githubusercontent.com/piedcipher/nCovid19-tracker/master/readme-medias/android.png" height=600 /></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p align="center"><img src="https://raw.githubusercontent.com/piedcipher/nCovid19-tracker/master/readme-medias/linux.png" /></p>
     </td>
   </tr>
 </table>
