@@ -13,17 +13,19 @@
     </td>
   </tr>
   <tr>
+    <th>PWA</th>
     <td>
       <p align="center"><img src="https://raw.githubusercontent.com/piedcipher/nCovid19-tracker/master/readme-medias/pwa.png" /></p>
     </td>
   </tr>
   <tr>
-    <td>Android</td>
+    <th>Android</th>
     <td>
       <p align="center"><img src="https://raw.githubusercontent.com/piedcipher/nCovid19-tracker/master/readme-medias/android.png" height=600 /></p>
     </td>
   </tr>
   <tr>
+    <th>Linux</th>
     <td>
       <p align="center"><img src="https://raw.githubusercontent.com/piedcipher/nCovid19-tracker/master/readme-medias/linux.png" /></p>
     </td>
