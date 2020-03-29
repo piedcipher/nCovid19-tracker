@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ncovidtracker/business/blocs/country_data.dart';
@@ -38,6 +39,113 @@ class CountryDataTab extends StatelessWidget {
         Expanded(
           child: ListView(
             children: <Widget>[
+              Container(
+                height: 220,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    PieChart(
+                      PieChartData(
+                        centerSpaceRadius: 30,
+                        borderData: FlBorderData(
+                          show: false,
+                        ),
+                        sectionsSpace: 0,
+                        sections: [
+                          PieChartSectionData(
+                            color: Colors.green,
+                            value: successState.countryData.countryData.first
+                                    .totalRecovered *
+                                100 /
+                                successState
+                                    .countryData.countryData.first.totalCases,
+                            showTitle: false,
+                            radius: 60,
+                          ),
+                          PieChartSectionData(
+                            color: Colors.blue,
+                            value: successState.countryData.countryData.first
+                                    .totalActiveCases *
+                                100 /
+                                successState
+                                    .countryData.countryData.first.totalCases,
+                            showTitle: false,
+                            radius: 60,
+                          ),
+                          PieChartSectionData(
+                            color: Colors.red,
+                            value: successState
+                                    .countryData.countryData.first.totalDeaths *
+                                100 /
+                                successState
+                                    .countryData.countryData.first.totalCases,
+                            showTitle: false,
+                            radius: 60,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              width: 10,
+                              height: 10,
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text('Active Cases'),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              width: 10,
+                              height: 10,
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text('Total Resolved Cases'),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              width: 10,
+                              height: 10,
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text('Total Deaths'),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               ListTile(
                 onTap: () {},
                 title: Text(successState
