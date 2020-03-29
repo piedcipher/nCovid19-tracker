@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('\u{1F9A0} nCovid19 Tracker'),
+          title: Text('nCovid19 Tracker'),
           bottom: TabBar(
             controller: DefaultTabController.of(context),
             tabs: <Widget>[
